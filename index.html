@@ -1,35 +1,29 @@
 <!DOCTYPE html>
-<html lang="th">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apps Script Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My App</title>
   <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-      overflow: hidden;
-    }
-    iframe {
-      width: 100%;
+    .responsive-iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 100vw;
       height: 100vh;
       border: none;
     }
   </style>
 </head>
 <body>
-  <iframe id="myframe" src="" allowfullscreen></iframe>
+  <iframe id="myframe" class="responsive-iframe" src="" allowfullscreen></iframe>
 
   <script>
-    // ดึงพารามิเตอร์ apps จาก URL เช่น ?apps=https%3A%2F%2F...
-    const params = new URL(window.location).searchParams;
-    const appsParam = params.get('apps');
-    if (appsParam) {
-      const url = decodeURIComponent(appsParam);
-      document.getElementById('myframe').src = url;
-    } else {
-      document.body.innerHTML = "<h3>❗ โปรดใส่พารามิเตอร์ ?apps=URL ของ Apps Script</h3>";
-    }
+    const apps = new URL(window.location);
+    const formUrl = apps.searchParams.get('apps');
+    const url = decodeURIComponent(formUrl);
+    document.getElementById('myframe').src = url;
   </script>
 </body>
 </html>
