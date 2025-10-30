@@ -39,16 +39,8 @@
   <script>
     const params = new URL(window.location);
     const formUrl = params.searchParams.get('apps');
+    const frame = document.getElementById('myframe');
+
     if (formUrl) {
-      const url = decodeURIComponent(formUrl);
-      const frame = document.getElementById('myframe');
-      frame.src = url;
-      frame.onload = () => {
-        document.getElementById('loading').style.display = 'none';
-      };
-    } else {
-      document.body.innerHTML = '<h2 style="text-align:center;margin-top:50px;">❗ Missing ?apps= parameter in URL</h2>';
-    }
-  </script>
-</body>
-</html>
+      // ตรวจสอบว่ามีการ encode แล้วหรือยัง
+      const isEncoded = fo
