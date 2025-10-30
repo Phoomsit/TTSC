@@ -1,29 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My App</title>
+  <title>App Wrapper</title>
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #f0f0f0;
+      height: 100%;
+      width: 100%;
+      font-family: sans-serif;
+    }
     .responsive-iframe {
       position: absolute;
       top: 0;
       left: 0;
-      bottom: 0;
-      right: 0;
       width: 100vw;
       height: 100vh;
       border: none;
     }
+    #loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2em;
+      color: #555;
+    }
   </style>
 </head>
 <body>
+  <div id="loading">⏳ Loading App...</div>
   <iframe id="myframe" class="responsive-iframe" src="" allowfullscreen></iframe>
 
   <script>
-    const apps = new URL(window.location);
-    const formUrl = apps.searchParams.get('apps');
-    const url = decodeURIComponent(formUrl);
-    document.getElementById('myframe').src = url;
+    const params = new URL(window.location);
+    const formUrl = params.searchParams.get('apps');
+    if (formUrl) {
+      const url = decodeURIComponent(formUrl);
+      const frame = document.getElementById('myframe');
+      frame.src = url;
+      frame.onload = () => {
+        document.getElementById('loading').style.display = 'none';
+      };
+    } else {
+      document.body.innerHTML = '<h2 style="text-align:center;margin-top:50px;">❗ Missing ?apps= parameter in URL</h2>';
+    }
   </script>
 </body>
 </html>
